@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const Thunder_Squad = SpriteKind.create()
+}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     Thunder_Wing.setImage(img`
         ................
@@ -29,20 +32,6 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.up.onEvent(ControllerButtonEvent.Repeated, function () {
     jetExhaust()
 })
-function A_to_E () {
-    music.playTone(440, music.beat(BeatFraction.Sixteenth))
-    music.playTone(494, music.beat(BeatFraction.Sixteenth))
-    music.playTone(988, music.beat(BeatFraction.Eighth))
-    music.playTone(740, music.beat(BeatFraction.Eighth))
-    music.playTone(698, music.beat(BeatFraction.Eighth))
-    music.playTone(698, music.beat(BeatFraction.Eighth))
-    music.playTone(659, music.beat(BeatFraction.Eighth))
-    music.playTone(587, music.beat(BeatFraction.Eighth))
-    music.playTone(587, music.beat(BeatFraction.Eighth))
-    music.playTone(494, music.beat(BeatFraction.Eighth))
-    music.playTone(587, music.beat(BeatFraction.Eighth))
-    music.playTone(659, music.beat(BeatFraction.Eighth))
-}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     missile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
@@ -63,7 +52,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . . . . 
         `, Thunder_Wing, 150, 0)
 })
-function G_to_E () {
+function G_to_C () {
     music.playTone(392, music.beat(BeatFraction.Sixteenth))
     music.playTone(494, music.beat(BeatFraction.Sixteenth))
     music.playTone(988, music.beat(BeatFraction.Eighth))
@@ -73,9 +62,9 @@ function G_to_E () {
     music.playTone(659, music.beat(BeatFraction.Eighth))
     music.playTone(587, music.beat(BeatFraction.Eighth))
     music.playTone(587, music.beat(BeatFraction.Eighth))
+    music.playTone(440, music.beat(BeatFraction.Eighth))
     music.playTone(494, music.beat(BeatFraction.Eighth))
-    music.playTone(587, music.beat(BeatFraction.Eighth))
-    music.playTone(659, music.beat(BeatFraction.Eighth))
+    music.playTone(554, music.beat(BeatFraction.Eighth))
 }
 controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
     jetExhaust()
@@ -100,6 +89,24 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         ........................
         `)
 })
+scene.onOverlapTile(SpriteKind.Thunder_Squad, sprites.builtin.forestTiles2, function (sprite, location) {
+    info.changeLifeBy(-1)
+    sprite.y += -10
+})
+function A_to_E () {
+    music.playTone(440, music.beat(BeatFraction.Sixteenth))
+    music.playTone(494, music.beat(BeatFraction.Sixteenth))
+    music.playTone(988, music.beat(BeatFraction.Eighth))
+    music.playTone(740, music.beat(BeatFraction.Eighth))
+    music.playTone(698, music.beat(BeatFraction.Eighth))
+    music.playTone(698, music.beat(BeatFraction.Eighth))
+    music.playTone(659, music.beat(BeatFraction.Eighth))
+    music.playTone(587, music.beat(BeatFraction.Eighth))
+    music.playTone(587, music.beat(BeatFraction.Eighth))
+    music.playTone(494, music.beat(BeatFraction.Eighth))
+    music.playTone(587, music.beat(BeatFraction.Eighth))
+    music.playTone(659, music.beat(BeatFraction.Eighth))
+}
 function jetExhaust () {
     flame = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
@@ -135,6 +142,10 @@ function Ab_to_E () {
     music.playTone(587, music.beat(BeatFraction.Eighth))
     music.playTone(659, music.beat(BeatFraction.Eighth))
 }
+sprites.onOverlap(SpriteKind.Thunder_Squad, SpriteKind.Enemy, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+    sprite.x += -15
+})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     Thunder_Wing.setImage(img`
         ........................
@@ -155,6 +166,20 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         ........................
         `)
 })
+function G_to_E () {
+    music.playTone(392, music.beat(BeatFraction.Sixteenth))
+    music.playTone(494, music.beat(BeatFraction.Sixteenth))
+    music.playTone(988, music.beat(BeatFraction.Eighth))
+    music.playTone(740, music.beat(BeatFraction.Eighth))
+    music.playTone(698, music.beat(BeatFraction.Eighth))
+    music.playTone(698, music.beat(BeatFraction.Eighth))
+    music.playTone(659, music.beat(BeatFraction.Eighth))
+    music.playTone(587, music.beat(BeatFraction.Eighth))
+    music.playTone(587, music.beat(BeatFraction.Eighth))
+    music.playTone(494, music.beat(BeatFraction.Eighth))
+    music.playTone(587, music.beat(BeatFraction.Eighth))
+    music.playTone(659, music.beat(BeatFraction.Eighth))
+}
 function gameMusic () {
     music.setTempo(30)
     for (let index = 0; index < 3; index++) {
@@ -186,7 +211,7 @@ function createSprites () {
         .....bbbbbbbbdd.........
         ....bbbbbbddd...........
         ........................
-        `, SpriteKind.Player)
+        `, SpriteKind.Thunder_Squad)
     enemyBomber = sprites.create(img`
         ................................................
         ................................................
@@ -220,25 +245,14 @@ function createSprites () {
         .................ddbbbbb6666bbbbbb6666b.........
         .....................dcb6666bbbbbbb666..........
         .....................dd...66bbbbbbbbb...........
-        `, SpriteKind.Player)
+        `, SpriteKind.Enemy)
 }
+sprites.onDestroyed(SpriteKind.Thunder_Squad, function (sprite) {
+    game.over(false)
+})
 controller.down.onEvent(ControllerButtonEvent.Repeated, function () {
     jetExhaust()
 })
-function G_to_C () {
-    music.playTone(392, music.beat(BeatFraction.Sixteenth))
-    music.playTone(494, music.beat(BeatFraction.Sixteenth))
-    music.playTone(988, music.beat(BeatFraction.Eighth))
-    music.playTone(740, music.beat(BeatFraction.Eighth))
-    music.playTone(698, music.beat(BeatFraction.Eighth))
-    music.playTone(698, music.beat(BeatFraction.Eighth))
-    music.playTone(659, music.beat(BeatFraction.Eighth))
-    music.playTone(587, music.beat(BeatFraction.Eighth))
-    music.playTone(587, music.beat(BeatFraction.Eighth))
-    music.playTone(440, music.beat(BeatFraction.Eighth))
-    music.playTone(494, music.beat(BeatFraction.Eighth))
-    music.playTone(554, music.beat(BeatFraction.Eighth))
-}
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     Thunder_Wing.setImage(img`
         ................
@@ -267,6 +281,9 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         ................
         `)
 })
+info.onLifeZero(function () {
+    Thunder_Wing.destroy(effects.fire, 500)
+})
 function B_to_E () {
     music.playTone(494, music.beat(BeatFraction.Sixteenth))
     music.playTone(494, music.beat(BeatFraction.Sixteenth))
@@ -281,11 +298,9 @@ function B_to_E () {
     music.playTone(587, music.beat(BeatFraction.Eighth))
     music.playTone(659, music.beat(BeatFraction.Eighth))
 }
-sprites.onDestroyed(SpriteKind.Player, function (sprite) {
-    game.over(false)
-})
-scene.onOverlapTile(SpriteKind.Player, sprites.builtin.forestTiles2, function (sprite, location) {
-    Thunder_Wing.destroy(effects.fire, 500)
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprite.destroy()
+    otherSprite.destroy()
 })
 controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
     jetExhaust()
@@ -294,6 +309,14 @@ let flame: Sprite = null
 let missile: Sprite = null
 let enemyBomber: Sprite = null
 let Thunder_Wing: Sprite = null
+game.splash("Thunder Wing")
+game.splash("Controls:")
+game.splash("1. Use arrow keys, WASD", "or the control pad to move")
+game.splash("2. Use the A button, space bar,", " or Z key to shoot missiles")
+game.splash("3. Use the B button or X key to ", "get an extra burst of speed every 10 seconds")
+game.splash("Your Goal: to protect your ", "country from enemies")
+game.splash("As you defend against the ", " enemy you will gain money, use it to upgrade your jet")
+let playerName = game.askForString("What is Your Name?")
 createSprites()
 controller.moveSprite(Thunder_Wing, 100, 100)
 scene.cameraFollowSprite(Thunder_Wing)
@@ -302,3 +325,7 @@ tiles.placeOnTile(Thunder_Wing, tiles.getTileLocation(2, 7))
 tiles.setTileAt(tiles.getTileLocation(0, 16), sprites.builtin.forestTiles2)
 let thunderWingVelocity = Thunder_Wing.vx
 tiles.placeOnTile(enemyBomber, tiles.getTileLocation(29, 7))
+info.setLife(3)
+forever(function () {
+	
+})
