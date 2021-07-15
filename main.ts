@@ -29,6 +29,14 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         ................
         `)
 })
+function controlsAndRules () {
+    game.splash("Thunder Wing")
+    game.splash("Controls:")
+    game.splash("1. Use arrow keys, WASD", "or the control pad to move")
+    game.splash("2. Use the A button, space bar,", " or Z key to shoot missiles")
+    game.splash("Your Goal: to protect your ", "country from enemies")
+    game.splash("As you progress you will ", "gain scrap, use the scrap to upgrade your jet")
+}
 controller.up.onEvent(ControllerButtonEvent.Repeated, function () {
     jetExhaust()
 })
@@ -248,7 +256,7 @@ function createSprites () {
         `, SpriteKind.Enemy)
 }
 sprites.onDestroyed(SpriteKind.Thunder_Squad, function (sprite) {
-    game.over(false)
+	
 })
 controller.down.onEvent(ControllerButtonEvent.Repeated, function () {
     jetExhaust()
@@ -282,7 +290,9 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 info.onLifeZero(function () {
-    Thunder_Wing.destroy(effects.fire, 500)
+    game.splash("You Died", "Try Again")
+    tiles.placeOnTile(Thunder_Wing, tiles.getTileLocation(2, 7))
+    info.setLife(3)
 })
 function B_to_E () {
     music.playTone(494, music.beat(BeatFraction.Sixteenth))
@@ -309,14 +319,9 @@ let flame: Sprite = null
 let missile: Sprite = null
 let enemyBomber: Sprite = null
 let Thunder_Wing: Sprite = null
-game.splash("Thunder Wing")
-game.splash("Controls:")
-game.splash("1. Use arrow keys, WASD", "or the control pad to move")
-game.splash("2. Use the A button, space bar,", " or Z key to shoot missiles")
-game.splash("3. Use the B button or X key to ", "get an extra burst of speed every 10 seconds")
-game.splash("Your Goal: to protect your ", "country from enemies")
-game.splash("As you defend against the ", " enemy you will gain money, use it to upgrade your jet")
+controlsAndRules()
 let playerName = game.askForString("What is Your Name?")
+game.splash("Get ready " + playerName)
 createSprites()
 controller.moveSprite(Thunder_Wing, 100, 100)
 scene.cameraFollowSprite(Thunder_Wing)
