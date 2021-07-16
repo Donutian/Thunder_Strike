@@ -154,6 +154,9 @@ sprites.onOverlap(SpriteKind.Thunder_Squad, SpriteKind.Enemy, function (sprite, 
     info.changeLifeBy(-1)
     sprite.x += -15
 })
+statusbars.onZero(StatusBarKind.Health, function (status) {
+    enemyBomber.destroy(effects.ashes, 500)
+})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     Thunder_Wing.setImage(img`
         ........................
@@ -254,6 +257,8 @@ function createSprites () {
         .....................dcb6666bbbbbbb666..........
         .....................dd...66bbbbbbbbb...........
         `, SpriteKind.Enemy)
+    statusbar = statusbars.create(15, 4, StatusBarKind.Health)
+    statusbar.attachToSprite(enemyBomber)
 }
 sprites.onDestroyed(SpriteKind.Thunder_Squad, function (sprite) {
 	
@@ -309,17 +314,17 @@ function B_to_E () {
     music.playTone(659, music.beat(BeatFraction.Eighth))
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    statusbar.value += -15
     sprite.destroy()
-    otherSprite.destroy()
 })
 controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
     jetExhaust()
 })
+let statusbar: StatusBarSprite = null
 let flame: Sprite = null
 let missile: Sprite = null
 let enemyBomber: Sprite = null
 let Thunder_Wing: Sprite = null
-controlsAndRules()
 let playerName = game.askForString("What is Your Name?")
 game.splash("Get ready " + playerName)
 createSprites()
